@@ -1,44 +1,50 @@
 console.log('App.js is running!');
 
-var appObject = {
+const appObject = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer',
-  options: ['one', 'two']
-}
-var template = ( 
-  <div>
-    <h1>{appObject.title}</h1>
-    {appObject.subtitle && <p>{appObject.subtitle}</p>}
-    <p>{(appObject.options && appObject.options.length > 0) ? 'Here are your options!' : 'No options'} </p>
-    <ol>
-      <li>Item One</li>
-      <li>Item Two</li>
-      <li>Item Three</li>
-    </ol>
-  </div>
-);
+  options: []
+};
 
-var user = {
-  name: 'Jason',
-  age: 42,
-  location: 'Mackay'
-}
-
-function getLocation(location) {
-  if (location) {
-    return <p>Location: {location}</p>;
+const formSubmit = (e) => {
+  e.preventDefault();
+  const option = e.target.elements.option.value;
+  if (option) {
+    appObject.options.push(option);
+    e.target.elements.option.value = '';
+    renderApp();
   }
-  // return user.location || 'Unknown'
+};
+
+const clearOptions = () => {
+  appObject.options = [];
+  renderApp();
 }
 
-var myTemplate = (
-  <div>
-    <h1>{user.name ? user.name : 'Anonymous'}</h1>
-    {(user.age && user.age >=18) && <p>Age: {user.age}</p>}
-    {getLocation(user.location)}
-  </div>
-)
+const appRoot = document.getElementById('app');
 
-var appRoot = document.getElementById('app');
+const renderApp = () => {
+  var template = ( 
+    <div>
+      <h1>{appObject.title}</h1>
+      {appObject.subtitle && <p>{appObject.subtitle}</p>}
+      <p>{(appObject.options && appObject.options.length > 0) ? 'Here are your options!' : 'No options'} </p>
+      <p>{appObject.options.length}</p>
+      <button onClick={clearOptions}>Remove all</button>
+      <ol>
+        <li>Item One</li>
+        <li>Item Two</li>
+        <li>Item Three</li>
+        <li>Item Four</li>
+      </ol>
+      <form onSubmit={formSubmit}>
+        <input type="text" name="option"/>
+        <button>Add Option</button>
+      </form>
+    </div>
+  );
 
-ReactDOM.render(template, appRoot);
+  ReactDOM.render(template, appRoot);
+}
+
+renderApp();
