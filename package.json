@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "babel:dev": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "server:dev": "live-server ./public/"
+  },
   "dependencies": {
     "babel-preset-env": "1.5.2",
     "babel-preset-react": "6.24.1"
